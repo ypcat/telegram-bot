@@ -44,7 +44,9 @@ function run(msg, matches)
   local txt = nil
   if matches[1] == "!e-hentai" then
     url, txt = get_popular()
-  else
+  elseif matches[1] == "pop" then
+    url, txt = get_popular()
+  elseif matches[1] == "top" then
     url, txt = get_high_rating()
   end
   local receiver = get_receiver(msg)
@@ -55,12 +57,14 @@ end
 return {
   description = "Send an e-hentai manga info.",
   usage = {
-    "!e-hentai: Send an popular right not e-hentai manga info.",
+    "!e-hentai: Send an popular right now e-hentai manga info which is popular right now.",
+    "!e-hentai pop: Send an popular right now e-hentai manga info which is popular right now.",
     "!e-hentai top: Send a > 4-star e-hentai manga info."
   },
   patterns = {
     "^!e%-hentai$",
-    "^!e%-hentai top$",
+    "^!e%-hentai (pop)$",
+    "^!e%-hentai (top)$",
   },
   run = run
 }
