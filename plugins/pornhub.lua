@@ -1,18 +1,7 @@
 do
 
-local function get_random_porn(attempt)
-  attempt = attempt or 0
-  res = io.popen('timeout 30s libs/pornhub.js'):read("*all")
-  local data = json:decode(res)
-  if not data and attempt < 3 then
-    print('Cannot get porn, try again...')
-    return get_random_porn(attempt + 1)
-  end
-  return data
-end
-
 local function run(msg, matches)
-  local data = get_random_porn()
+  local data = json:decode(io.popen('timeout 30s libs/pornhub.js'):read("*all"))
   if not data then
     return 'Error getting porn, please try again later.'
   else
