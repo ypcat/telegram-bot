@@ -51,8 +51,6 @@ end
 function run(msg, matches)
     if string.match(msg.text, "!quote$") then
         return get_quote(msg)
-    elseif string.match(msg.text, "[Ss][Oo][Nn][Gg]") then
-        return get_quote(msg)
     elseif string.match(msg.text, "!addquote (.+)$") then
         quotes_table = read_quotes_file()
         return save_quote(msg)
@@ -69,7 +67,6 @@ return {
     patterns = {
         "^!addquote (.+)$",
         "^!quote$",
-        "[Ss][Oo][Nn][Gg]"
     },
     run = run
 }
