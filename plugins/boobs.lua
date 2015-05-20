@@ -40,11 +40,11 @@ end
 local function run(msg, matches)
   local url = nil
   
-  if matches[1] == "!boobs" then
+  if matches[1]:lower() == "boobs" or matches[1]:lower() == "oppai" then
     url = getRandomBoobs()
   end
 
-  if matches[1] == "!butts" then
+  if matches[1]:lower() == "butts" then
     url = getRandomButts()
   end
 
@@ -63,8 +63,9 @@ return {
     "!butts: Get a butts NSFW image. 🔞"
   },
   patterns = {
-    "^!boobs$",
-    "^!butts$"
+    "[Bb]oobs",
+    "[Bb]utts",
+    "[Oo]ppai",
   }, 
   run = run 
 }
