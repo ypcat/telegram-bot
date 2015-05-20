@@ -1,7 +1,7 @@
 do
 
-function get_high_rating()
-  local res, code = http.request("http://g.e-hentai.org/?f_doujinshi=1&f_manga=1&f_artistcg=1&f_gamecg=1&f_western=0&f_non-h=1&f_imageset=1&f_cosplay=1&f_asianporn=1&f_misc=1&f_search=&f_apply=Apply+Filter&advsearch=1&f_sname=on&f_stags=on&f_sr=on&f_srdd=4")
+function get_high_rating(kw)
+  local res, code = http.request("http://g.e-hentai.org/?f_doujinshi=1&f_manga=1&f_artistcg=1&f_gamecg=1&f_western=0&f_non-h=1&f_imageset=1&f_cosplay=1&f_asianporn=1&f_misc=1&f_apply=Apply+Filter&advsearch=1&f_sname=on&f_stags=on&f_sr=on&f_srdd=4&f_search=" .. (kw or ''))
   if code ~= 200 then return "HTTP ERROR" end
   local gidlist = {}
   for gid, gtok in res:gmatch("http://g.e%-hentai.org/g/([^/]+)/([^/]+)/") do
@@ -48,6 +48,8 @@ function run(msg, matches)
     url, txt = get_popular()
   elseif matches[1] == "top" then
     url, txt = get_high_rating()
+  else
+    url, txt = get_high_rating(matches[1])
   end
   local receiver = get_receiver(msg)
   send_photo_from_url(receiver, url)
@@ -59,12 +61,14 @@ return {
   usage = {
     "!e-hentai: Send an popular right now e-hentai manga info which is popular right now.",
     "!e-hentai pop: Send an popular right now e-hentai manga info which is popular right now.",
-    "!e-hentai top: Send a > 4-star e-hentai manga info."
+    "!e-hentai top: Send a > 4-star e-hentai manga info.",
+    "!e-hentai keyword: Search with keyword."
   },
   patterns = {
     "^!e%-hentai$",
     "^!e%-hentai (pop)$",
     "^!e%-hentai (top)$",
+    "^!e%-hentai (.*)$",
   },
   run = run
 }

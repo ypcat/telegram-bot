@@ -30,6 +30,8 @@ local function run(msg, matches)
       url = url .. scale_week
     elseif matches[1] == "m" then
       url = url .. scale_month
+    else
+      url = URL .. URL_NEW .. '?tags=' .. matches[1]
     end
   end
 
@@ -38,7 +40,7 @@ local function run(msg, matches)
   if post then
     vardump(post)
     local img = URL .. post.large_file_url
-    send_photo_from_url(get_receiver(msg), img)
+    --send_photo_from_url(get_receiver(msg), img)
 
     local txt = ''
     if post.tag_string_artist ~= '' then
@@ -60,13 +62,15 @@ return {
     "!danbooru - gets a random fresh image from Danbooru 🔞",
     "!danboorud - random daily popular image 🔞",
     "!danbooruw - random weekly popular image 🔞",
-    "!danboorum - random monthly popular image 🔞"
+    "!danboorum - random monthly popular image 🔞",
+    "!danbooru tag - random image with tag 🔞",
   },
   patterns = {
     "^!danbooru$",
     "^!danbooru ?(d)$",
     "^!danbooru ?(w)$",
-    "^!danbooru ?(m)$"
+    "^!danbooru ?(m)$",
+    "^!danbooru (.*)$"
   },
   run = run 
 }
